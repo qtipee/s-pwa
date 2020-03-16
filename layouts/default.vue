@@ -73,14 +73,10 @@ export default {
             },
             ],
             title: 'S-PWA',
+            // TODO: async
             breadcrumbsItems: [
                 {
                     text: 'Home',
-                    disabled: false,
-                    href: '/',
-                },
-                {
-                    text: 'Test',
                     disabled: false,
                     href: '/',
                 },
