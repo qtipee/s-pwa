@@ -36,7 +36,15 @@
 
     <v-content>
         <v-container>
+
+            <v-breadcrumbs :items="breadcrumbsItems">
+                <template v-slot:divider>
+                    <v-icon>mdi-chevron-right</v-icon>
+                </template>
+            </v-breadcrumbs>
+
             <nuxt />
+
         </v-container>
     </v-content>
 
@@ -69,7 +77,19 @@ export default {
                 to: '/inspire'
             }
             ],
-            title: 'S-PWA'
+            title: 'S-PWA',
+            breadcrumbsItems: [
+                {
+                    text: 'Home',
+                    disabled: false,
+                    href: '/',
+                },
+                {
+                    text: 'Test',
+                    disabled: false,
+                    href: '/',
+                },
+            ],
         }
     }
 }
