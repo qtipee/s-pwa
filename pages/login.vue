@@ -1,5 +1,5 @@
 <template>
-    <form>
+    <form @submit="login" method="POST">
         <v-container fluid>
             <v-row>
 
@@ -28,13 +28,13 @@
 
                 <v-col cols="12">
                     <v-checkbox
-                        v-model="checkbox"
+                        v-model="login.checkbox"
                         label="Stay logged in"
                     ></v-checkbox>
                 </v-col>
 
                 <v-col cols="12">
-                    <v-btn block @click="submit">Log in</v-btn>
+                    <v-btn type="submit">Log in</v-btn>
                 </v-col>
 
             </v-row>
@@ -57,8 +57,8 @@ export default {
     data: () => ({
         email: '',
         password: '',
-        showPw: false,
         checkbox: '',
+        showPw: false,
     }),
 
     computed: {
@@ -78,8 +78,21 @@ export default {
     },
 
     methods: {
-        submit () {
-            this.$v.$touch()
+        async login () {
+            //TODO: needs backend
+            /*
+            try {
+                let loginInfo = {
+                    email: email,
+                    password: password,
+                    checkbox: checkbox,
+                }
+                let response = await this.$auth.loginWith('local', { data: loginInfo })
+                console.log(response);
+            } catch (err) {
+                console.log(err);
+            }
+            */
         },
     },
 }

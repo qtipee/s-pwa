@@ -43,7 +43,38 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+      '@nuxtjs/axios',
+      '@nuxtjs/auth'
   ],
+
+    //TODO: needs backend
+    axios: {
+        baseURL: 'http:localhost:8000/api',
+    },
+
+    auth: {
+        redirect: {
+            login: '/login',
+            logout: '/',
+            callback: '/login',
+            home: '/',
+        },
+        strategies: {
+            local: {
+                //TODO: needs backend
+                endpoints: {
+                    login: { url: '/login', method: 'post', propertyName: 'token' },
+                    logout: { url: '/logout', method: 'post' },
+                    user: { url: '/user', method: 'get', propertyName: 'user' },
+                },
+            },
+        },
+    },
+
+    router: {
+        middleware: ['auth'],
+    },
+
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
