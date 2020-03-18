@@ -1,31 +1,63 @@
 <template>
     <div class="file-explorer">
-        <v-text-field
-            v-model="search"
-            label="Search..."
-            solo-inverted
-            hide-details
-            clearable
-        ></v-text-field>
-        <v-treeview
-            v-model="tree"
-            :search="search"
-            :filter="filter"
-            :open="open"
-            :items="items"
-            item-key="name"
-            open-on-click
-            dense
-        >
-            <template v-slot:prepend="{ item, open }">
-                <v-icon v-if="!item.file">
-                    {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
-                </v-icon>
-                <v-icon v-else>
-                    {{ files[item.file] }}
-                </v-icon>
-            </template>
-        </v-treeview>
+        <v-row justify="space-between">
+
+            <v-col cols="12">
+                <v-text-field
+                    v-model="search"
+                    label="Search..."
+                    solo-inverted
+                    hide-details
+                    clearable
+                ></v-text-field>
+            </v-col>
+
+            <v-col cols="6">
+                <v-treeview
+                    v-model="tree"
+                    :items="items"
+                    item-key="name"
+                    :search="search"
+                    :filter="filter"
+                    :open="open"
+                    open-on-click
+                    activatable
+                    :active.sync="active"
+                    return-object
+                    selectable
+                    selected-color="error"
+                    dense
+                    transition
+                >
+                    <template v-slot:prepend="{ item, open }">
+                        <v-icon v-if="!item.file">
+                            {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
+                        </v-icon>
+                        <v-icon v-else>
+                            {{ files[item.file] }}
+                        </v-icon>
+                    </template>
+                </v-treeview>
+            </v-col>
+
+            <v-divider vertical></v-divider>
+
+            <v-col class="d-flex text-center">
+                <div
+                    v-if="!selected"
+                    class="title white--text text--lighten-1 font-weight-light"
+                    style="align-self: center;"
+                >
+                    Select a file
+                </div>
+                <v-card
+                    v-else
+                >
+                    Selected {{ selected.name }}
+                </v-card>
+            </v-col>
+
+        </v-row>
     </div>
 </template>
 
@@ -33,7 +65,8 @@
 export default {
     data () {
         return {
-            open: ['public'],
+            open: [],
+            active: [],
             search: null,
             files: {
                 html: 'mdi-language-html5',
@@ -103,7 +136,13 @@ export default {
     computed: {
         filter () {
             return (item, search, textKey) => item[textKey].indexOf(search) > -1
-        }
+        },
+
+        selected () {
+            if (!this.active.length) return undefined
+
+            return this.active[0]
+        },
     },
 }
 </script>
