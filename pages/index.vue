@@ -1,5 +1,5 @@
 <template>
-    <FileExplorer />
+    <!--FileExplorer /-->
 </template>
 
 <script>
