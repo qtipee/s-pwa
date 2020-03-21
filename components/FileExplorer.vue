@@ -25,7 +25,6 @@
                     :active.sync="active"
                     return-object
                     selectable
-                    selected-color="error"
                     dense
                     transition
                 >
@@ -42,7 +41,7 @@
 
             <v-divider vertical></v-divider>
 
-            <v-col class="d-flex text-center">
+            <v-col class="text-center">
                 <div
                     v-if="!selected"
                     class="title white--text text--lighten-1 font-weight-light"
@@ -50,11 +49,22 @@
                 >
                     Select a file
                 </div>
-                <v-card
+                <div
+                    class="file-info"
                     v-else
                 >
-                    Selected {{ selected.name }}
-                </v-card>
+                    <v-text-field
+                        :value="selectedValue"
+                    ></v-text-field>
+                    <div class="file-fab">
+                        <v-btn class="mx-1" fab small outlined>
+                            <v-icon>mdi-pencil-outline</v-icon>
+                        </v-btn>
+                        <v-btn class="mx-1" fab small outlined>
+                            <v-icon>mdi-trash-can-outline</v-icon>
+                        </v-btn>
+                    </div>
+                </div>
             </v-col>
 
         </v-row>
@@ -68,6 +78,8 @@ export default {
             open: [],
             active: [],
             search: null,
+
+            //FIXME: temporary
             files: {
                 html: 'mdi-language-html5',
                 js: 'mdi-nodejs',
@@ -142,6 +154,10 @@ export default {
             if (!this.active.length) return undefined
 
             return this.active[0]
+        },
+
+        selectedValue () {
+            return this.selected.name
         },
     },
 }
