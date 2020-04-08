@@ -80,6 +80,7 @@ export default {
         tableName: 'CRUD Test',
         dialog: false,
         headers: [],
+        inputs: [],
         items: [],
         editedIndex: -1,
         editedItem: {
@@ -128,6 +129,12 @@ export default {
             { text: 'Carbs (g)', value: 'carbs' },
             { text: 'Protein (g)', value: 'protein' },
             { text: 'Actions', value: 'actions', sortable: false },
+            ]
+
+            this.inputs = [
+                {
+
+                },
             ]
 
             this.items = [
