@@ -10,6 +10,10 @@ import FileExplorer from '~/components/FileExplorer.vue'
 import CRUDTable from '~/components/CRUDTable.vue'
 
 export default {
+
+    // TEMPORARY: allows access to the index page without being logged in
+    auth: false,
+
     components: {
         FileExplorer,
         CRUDTable,
