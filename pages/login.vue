@@ -2,7 +2,6 @@
     <form @submit="login" method="POST">
         <v-container fluid>
             <v-row>
-
                 <v-col cols="12">
                     <v-text-field
                         v-model="email"
@@ -12,7 +11,6 @@
                         @blur="$v.email.$touch()"
                     ></v-text-field>
                 </v-col>
-
                 <v-col cols="12">
                     <v-text-field
                         v-model="password"
@@ -25,18 +23,15 @@
                         @blur="$v.password.$touch()"
                     ></v-text-field>
                 </v-col>
-
                 <v-col cols="12">
                     <v-checkbox
                         v-model="login.checkbox"
                         label="Stay logged in"
                     ></v-checkbox>
                 </v-col>
-
                 <v-col cols="12">
                     <v-btn type="submit">Log in</v-btn>
                 </v-col>
-
             </v-row>
         </v-container>
     </form>
@@ -54,12 +49,14 @@ export default {
         password: { required },
     },
 
-    data: () => ({
-        email: '',
-        password: '',
-        checkbox: '',
-        showPw: false,
-    }),
+    data () {
+        return {
+            email: '',
+            password: '',
+            checkbox: '',
+            showPw: false,
+        }
+    },
 
     computed: {
         emailErrors () {
@@ -67,14 +64,17 @@ export default {
             if (!this.$v.email.$dirty) return errors
             !this.$v.email.email && errors.push('Must be valid email')
             !this.$v.email.required && errors.push('Email is required')
+
             return errors
         },
+
         passwordErrors () {
             const errors = []
             if (!this.$v.password.$dirty) return errors
             !this.$v.password.required && errors.push('Password is required')
+
             return errors
-        },
+        }
     },
 
     methods: {
@@ -93,7 +93,7 @@ export default {
                 console.log(err);
             }
             */
-        },
-    },
+        }
+    }
 }
 </script>
