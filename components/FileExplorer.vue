@@ -2,7 +2,6 @@
     <div class="file-explorer">
         <h1>TITLE: {{ test }}</h1>
         <v-row justify="space-between">
-
             <v-col cols="12">
                 <v-text-field
                     v-model="search"
@@ -12,7 +11,6 @@
                     clearable
                 ></v-text-field>
             </v-col>
-
             <v-col cols="6">
                 <v-treeview
                     v-model="tree"
@@ -39,9 +37,7 @@
                     </template>
                 </v-treeview>
             </v-col>
-
             <v-divider vertical></v-divider>
-
             <v-col class="text-center">
                 <div
                     v-if="!selected"
@@ -67,14 +63,11 @@
                     </div>
                 </div>
             </v-col>
-
         </v-row>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
     data () {
         return {
@@ -149,7 +142,7 @@ export default {
                     file: 'txt',
                 },
                 */
-            ],
+            ]
         }
     },
 
@@ -180,7 +173,7 @@ export default {
 
         selectedValue () {
             return this.selected.name
-        },
-    },
+        }
+    }
 }
 </script>
