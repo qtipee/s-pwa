@@ -9,7 +9,7 @@
         >
             <v-list>
                 <v-list-item
-                    v-for="(item, i) in items"
+                    v-for="(item, i) in navItems"
                     :key="i"
                     :to="item.to"
                     router
@@ -36,7 +36,15 @@
 
     <v-content>
         <v-container>
+
+            <v-breadcrumbs :items="breadcrumbsItems">
+                <template v-slot:divider>
+                    <v-icon>mdi-chevron-right</v-icon>
+                </template>
+            </v-breadcrumbs>
+
             <nuxt />
+
         </v-container>
     </v-content>
 
@@ -57,19 +65,22 @@ export default {
         return {
             drawer: false,  // Hidden by default
             // TODO: async
-            items: [
+            navItems: [
             {
                 icon: 'mdi-apps',
-                title: 'Welcome',
+                title: 'Home',
                 to: '/'
             },
-            {
-                icon: 'mdi-chart-bubble',
-                title: 'Inspire',
-                to: '/inspire'
-            }
             ],
-            title: 'S-PWA'
+            title: 'S-PWA',
+            // TODO: async
+            breadcrumbsItems: [
+                {
+                    text: 'Home',
+                    disabled: false,
+                    href: '/',
+                },
+            ],
         }
     }
 }
