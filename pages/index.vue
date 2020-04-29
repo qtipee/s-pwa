@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--FileExplorer /-->
-        <!--CRUDTable /-->
+        <CRUDTable />
     </div>
 </template>
 

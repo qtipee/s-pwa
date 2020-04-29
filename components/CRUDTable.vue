@@ -23,21 +23,56 @@
                         <v-card-text>
                             <v-container>
                                 <v-row>
-                                <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
-                                </v-col>
+                                    <v-col cols=12 v-for="(field, i) in fields" :key="i">
+                                        <v-text-field
+                                            v-if="field.component === 'v-text-field'"
+                                            :v-model="editedItem[field.name]"
+                                            :label="field.label"
+                                            :type="field.type"
+                                        ></v-text-field>
+                                        <v-textarea
+                                            v-if="field.component === 'v-textarea'"
+                                            :v-model="editedItem[field.name]"
+                                            :label="field.label"
+                                        ></v-textarea>
+                                        <v-switch
+                                            v-if="field.component === 'v-switch'"
+                                            :v-model="editedItem[field.name]"
+                                            :label="field.label"
+                                        ></v-switch>
+                                        <v-select
+                                            v-if="field.component === 'v-select'"
+                                            :v-model="editedItem[field.name]"
+                                            :label="field.label"
+                                            :items="field.items"
+                                        ></v-select>
+                                        <v-file-input
+                                            v-if="field.component === 'v-file-input'"
+                                            :v-model="editedItem[field.name]"
+                                            :label="field.label"
+                                            :prepend-icon="field.icon"
+                                        ></v-file-input>
+                                        <v-menu
+                                            v-if="field.component === 'v-date-picker'"
+                                            :nudge-right="40"
+                                            transition="scale-transition"
+                                            offset-y
+                                        >
+                                            <template v-slot:activator="{ on }">
+                                                <v-text-field
+                                                    :v-model="editedItem[field.name]"
+                                                    :label="field.label"
+                                                    prepend-icon="mdi-calendar"
+                                                    readonly
+                                                    v-on="on"
+                                                ></v-text-field>
+                                            </template>
+                                            <v-date-picker
+                                                :v-model="editedItem[field.name]"
+                                                no-title
+                                            ></v-date-picker>
+                                        </v-menu>
+                                    </v-col>
                                 </v-row>
                             </v-container>
                         </v-card-text>
@@ -68,9 +103,9 @@
 export default {
     data: () => ({
         tableName: 'CRUD Test',
-        dialog: false,
+        dialog: false,        
         headers: [],
-        inputs: [],
+        fields: [],
         items: [],
         editedIndex: -1,
         editedItem: {
@@ -107,97 +142,61 @@ export default {
 
     methods: {
         initialize () {
-            this.headers = [
+
+            this.fields = [
                 {
-                    text: 'Dessert (100g serving)',
-                    align: 'start',
-                    sortable: false,
-                    value: 'name',
+                    name: 'id',
+                    component: 'v-text-field',
+                    label: 'ID',
+                    type: 'number'
                 },
-                { text: 'Calories', value: 'calories' },
-                { text: 'Fat (g)', value: 'fat' },
-                { text: 'Carbs (g)', value: 'carbs' },
-                { text: 'Protein (g)', value: 'protein' },
-                { text: 'Actions', value: 'actions', sortable: false },
+                {
+                    name: 'title',
+                    component: 'v-text-field',
+                    label: 'Title',
+                    type: 'text'
+                },
+                {
+                    name: 'text',
+                    component: 'v-textarea',
+                    label: 'Text'
+                },
+                {
+                    name: 'boolean',
+                    component: 'v-switch',
+                    label: 'Boolean'
+                },
+                {
+                    name: 'date',
+                    component: 'v-date-picker',
+                    label: 'Date'
+                },
+                {
+                    name: 'select',
+                    component: 'v-select',
+                    label: 'Select',
+                    items: ['Item 1', 'Item 2', 'Item 3', 'Item 4']
+                },
+                {
+                    name: 'image',
+                    component: 'v-file-input',
+                    label: 'Image',
+                    icon: 'mdi-image'
+                },
+                {
+                    name: 'file',
+                    component: 'v-file-input',
+                    label: 'File',
+                    icon: 'mdi-paperclip'
+                }
             ]
 
-            this.inputs = [
-                {
-
-                },
-            ]
+            this.fields.forEach(field => {
+                this.headers.push({ text: field.label, value: field.name })
+            })
+            this.headers.push({ text: 'Actions', value: 'actions', sortable: false })
 
             this.items = [
-                {
-                    name: 'Frozen Yogurt',
-                    calories: 159,
-                    fat: 6.0,
-                    carbs: 24,
-                    protein: 4.0,
-                },
-                {
-                    name: 'Ice cream sandwich',
-                    calories: 237,
-                    fat: 9.0,
-                    carbs: 37,
-                    protein: 4.3,
-                },
-                {
-                    name: 'Eclair',
-                    calories: 262,
-                    fat: 16.0,
-                    carbs: 23,
-                    protein: 6.0,
-                },
-                {
-                    name: 'Cupcake',
-                    calories: 305,
-                    fat: 3.7,
-                    carbs: 67,
-                    protein: 4.3,
-                },
-                {
-                    name: 'Gingerbread',
-                    calories: 356,
-                    fat: 16.0,
-                    carbs: 49,
-                    protein: 3.9,
-                },
-                {
-                    name: 'Jelly bean',
-                    calories: 375,
-                    fat: 0.0,
-                    carbs: 94,
-                    protein: 0.0,
-                },
-                {
-                    name: 'Lollipop',
-                    calories: 392,
-                    fat: 0.2,
-                    carbs: 98,
-                    protein: 0,
-                },
-                {
-                    name: 'Honeycomb',
-                    calories: 408,
-                    fat: 3.2,
-                    carbs: 87,
-                    protein: 6.5,
-                },
-                {
-                    name: 'Donut',
-                    calories: 452,
-                    fat: 25.0,
-                    carbs: 51,
-                    protein: 4.9,
-                },
-                {
-                    name: 'KitKat',
-                    calories: 518,
-                    fat: 26.0,
-                    carbs: 65,
-                    protein: 7,
-                },
             ]
         },
 
