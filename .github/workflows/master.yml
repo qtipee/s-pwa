@@ -26,7 +26,6 @@ jobs:
         npm install
     - name: Nuxt Linter
       run: |
-        npm run lintfix
         npm run lint
     - name: Build Nuxt application
       run: |
