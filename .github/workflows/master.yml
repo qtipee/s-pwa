@@ -14,13 +14,14 @@ jobs:
     steps:
     - name: Install npm dependencies
       run: |
-        pwd
-        ls
+        cd src
         npm install
     - name: Nuxt Linter
       run: |
+        cd src
         npm run lintfix
         npm run lint
     - name: Build Nuxt application
       run: |
+        cd src
         npm run build
