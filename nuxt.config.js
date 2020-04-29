@@ -36,14 +36,20 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
+    //'@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
+      '@nuxtjs/axios'
   ],
+
+    axios: {
+        baseURL: "http://localhost:8000"
+    },
+
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module

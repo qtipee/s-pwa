@@ -1,5 +1,6 @@
 <template>
     <div class="file-explorer">
+        <h1>TITLE: {{ test }}</h1>
         <v-row justify="space-between">
 
             <v-col cols="12">
@@ -72,6 +73,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     data () {
         return {
@@ -79,7 +82,8 @@ export default {
             active: [],
             search: null,
 
-            //FIXME: temporary
+            test: '',
+
             files: {
                 html: 'mdi-language-html5',
                 js: 'mdi-nodejs',
@@ -91,7 +95,9 @@ export default {
                 xls: 'mdi-file-excel',
             },
             tree: [],
+            //FIXME: temporary
             items: [
+                /*
                 {
                     name: '.git',
                 },
@@ -142,9 +148,25 @@ export default {
                     name: 'yarn.lock',
                     file: 'txt',
                 },
+                */
             ],
         }
     },
+
+    // Basic components do not have an asyncData method ; use mounted or
+    // asyncData from the page component and pass the data as props
+    mounted () {
+        /*
+        return axios.get(`http://127.0.0.1:8000/test`)
+            .then((res) => {
+                return { test: res.data.title}
+            })
+            .catch((err) => {
+                console.log('[ERROR]', err)
+            })
+            */
+    },
+
     computed: {
         filter () {
             return (item, search, textKey) => item[textKey].indexOf(search) > -1
