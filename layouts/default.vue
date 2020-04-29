@@ -1,7 +1,7 @@
 <template>
     <v-app dark>
 
-        <v-navigation-drawer
+        <v-navigation-drawer v-if="$auth.loggedIn"
             v-model="drawer"
             clipped
             fixed
@@ -30,7 +30,7 @@
         fixed
         app
     >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        <v-app-bar-nav-icon  v-if="$auth.loggedIn" @click.stop="drawer = !drawer" />
         <v-toolbar-title v-text="title" />
     </v-app-bar>
 
